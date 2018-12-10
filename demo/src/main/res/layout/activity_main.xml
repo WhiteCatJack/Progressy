@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.white.cat.jack.progressy.wheel.ProgressWheel
+            android:id="@+id/progress1"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center" />
+
+        <com.white.cat.jack.progressy.wheel.ProgressWheel
+            android:id="@+id/progress2"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center" />
+
+        <com.white.cat.jack.progressy.wheel.ProgressWheel
+            android:id="@+id/progress3"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center" />
+
+        <com.white.cat.jack.progressy.wheel.ProgressWheel
+            android:id="@+id/progress4"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_gravity="center" />
+
+        <com.white.cat.jack.progressy.wheel.ProgressWheel
+            android:id="@+id/progress5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+    </LinearLayout>
+</ScrollView>
