@@ -16,11 +16,10 @@ import android.support.annotation.ColorInt;
 public class RainDropStyle extends AbstractStyle{
 
     private int mColor = Color.BLACK;
-    private static final float LINE_THICKNESS_RATIO = 0.25f;
 
     @Override
     public void draw(Canvas canvas, Path path, Paint paint, RectF rectF,
-                     float sideLength, float degree) {
+                     float sideLength, float timeRatio) {
         // prepare
         float halfSideLength = sideLength / 2;
         float oneThirdSideLength = sideLength / 3;
@@ -41,7 +40,7 @@ public class RainDropStyle extends AbstractStyle{
         path.arcTo(rectF, 90, -180);
 
         canvas.save();
-        canvas.rotate(degree, halfSideLength, halfSideLength);
+        canvas.rotate(timeRatio * 360, halfSideLength, halfSideLength);
         canvas.drawPath(path, paint);
         canvas.restore();
     }

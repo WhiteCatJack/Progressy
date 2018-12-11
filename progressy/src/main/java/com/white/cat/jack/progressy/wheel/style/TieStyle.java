@@ -22,7 +22,7 @@ public class TieStyle extends AbstractStyle {
 
     @Override
     public void draw(Canvas canvas, Path path, Paint paint, RectF rectF,
-                     float sideLength, float degree) {
+                     float sideLength, float timeRatio) {
         // prepare
         float halfSideLength = sideLength / 2;
         int lineThickness = Utils.roundingUp(sideLength * LINE_THICKNESS_RATIO);
@@ -42,7 +42,7 @@ public class TieStyle extends AbstractStyle {
         path.rMoveTo(0, -lineThickness);
 
         canvas.save();
-        canvas.rotate(degree, halfSideLength, halfSideLength);
+        canvas.rotate(timeRatio * 360, halfSideLength, halfSideLength);
         canvas.drawPath(path, paint);
         canvas.restore();
     }

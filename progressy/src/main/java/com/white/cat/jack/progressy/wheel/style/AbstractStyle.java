@@ -5,6 +5,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
 import android.support.annotation.ColorInt;
+import android.support.annotation.FloatRange;
 
 /**
  * @author 泽乾
@@ -13,7 +14,7 @@ import android.support.annotation.ColorInt;
 public abstract class AbstractStyle {
 
     public abstract void draw(Canvas canvas, Path path, Paint paint, RectF rectF,
-                              float sideLength, float degree);
+                              float sideLength, @FloatRange(from = 0, to = 0.999999f) float degree);
 
     public abstract void setColor(@ColorInt int color);
 }

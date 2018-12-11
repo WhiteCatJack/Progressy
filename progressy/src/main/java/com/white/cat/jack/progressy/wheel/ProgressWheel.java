@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
 import android.support.annotation.ColorInt;
+import android.support.annotation.FloatRange;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
@@ -32,7 +33,8 @@ public class ProgressWheel extends View {
 
     private static final int DURATION_IN_MILLIS = 2000;
     private ValueAnimator mAnimator;
-    private float mDegree;
+    @FloatRange(from = 0, to = 0.999999f)
+    private float mTimeRatio;
 
     private AbstractStyle mStyle = new RainDropStyle();
 
@@ -69,14 +71,14 @@ public class ProgressWheel extends View {
     }
 
     private void initAnimator() {
-        ValueAnimator animator = ValueAnimator.ofFloat(0, 359.999999f);
+        ValueAnimator animator = ValueAnimator.ofFloat(0, 0.999999f);
         animator.setDuration(DURATION_IN_MILLIS);
         animator.setRepeatCount(ValueAnimator.INFINITE);
         animator.setInterpolator(new LinearInterpolator());
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                mDegree = (float) animation.getAnimatedValue();
+                mTimeRatio = (float) animation.getAnimatedValue();
                 invalidate();
             }
         });
@@ -115,7 +117,7 @@ public class ProgressWheel extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        mStyle.draw(canvas, mPath, mPaint, mRectF, mSideLength, mDegree);
+        mStyle.draw(canvas, mPath, mPaint, mRectF, mSideLength, mTimeRatio);
     }
 
     public void setStyle(@NonNull TieStyle style) {
