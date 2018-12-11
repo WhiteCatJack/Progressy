@@ -17,7 +17,7 @@
         <com.white.cat.jack.progressy.wheel.ProgressWheel
             android:id="@+id/progress2"
             android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_height="43dp"
             android:layout_gravity="center" />
 
         <com.white.cat.jack.progressy.wheel.ProgressWheel
