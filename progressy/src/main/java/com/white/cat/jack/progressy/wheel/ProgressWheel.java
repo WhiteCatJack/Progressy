@@ -54,7 +54,6 @@ public class ProgressWheel extends View {
     private void init() {
         initTools();
         initAnimator();
-
         // for test
         setColor(ContextCompat.getColor(getContext(), R.color.nice_blue));
     }
