@@ -6,17 +6,14 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
-import android.support.annotation.ColorInt;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
 /**
- * Description.
- *
  * @author 泽乾
- * createAt 2018/12/11 7:49 PM
+ * createAt 2018/12/13 10:01 AM
  */
-public final class RainDropStyle extends AbstractStyle {
+public final class ExampleStyle extends AbstractStyle {
 
     private int mColor = Color.BLACK;
 
@@ -26,8 +23,6 @@ public final class RainDropStyle extends AbstractStyle {
 
     private static final int DURATION_IN_MILLIS = 2000;
     private ValueAnimator mAnimator;
-
-    private float mTimeRatio;
 
     @Override
     public void init(View view) {
@@ -54,7 +49,6 @@ public final class RainDropStyle extends AbstractStyle {
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                mTimeRatio = (float) animation.getAnimatedValue();
                 doneDraw();
             }
         });
@@ -63,7 +57,7 @@ public final class RainDropStyle extends AbstractStyle {
     }
 
     @Override
-    public void setColor(@ColorInt int color) {
+    public void setColor(int color) {
         this.mColor = color;
     }
 
@@ -79,34 +73,6 @@ public final class RainDropStyle extends AbstractStyle {
 
     @Override
     public void draw(Canvas canvas, float sideLength) {
-        Path path = mPath;
-        Paint paint = mPaint;
-        RectF rectF = mRectF;
-        float timeRatio = mTimeRatio;
 
-        // prepare
-        float halfSideLength = sideLength / 2;
-        float oneThirdSideLength = sideLength / 3;
-        float oneSixthSideLength = halfSideLength - oneThirdSideLength;
-
-        path.rewind();
-
-        // set
-        paint.setColor(mColor);
-        paint.setStyle(Paint.Style.FILL);
-
-        // make a shape
-        path.moveTo(halfSideLength, 0);
-        rectF.set(0, 0, sideLength, sideLength);
-        path.arcTo(rectF, 270, -180);
-        rectF.set(oneSixthSideLength, oneThirdSideLength, sideLength - oneSixthSideLength, sideLength);
-        path.arcTo(rectF, 90, 180);
-        rectF.set(oneThirdSideLength, 0, sideLength - oneThirdSideLength, oneThirdSideLength);
-        path.arcTo(rectF, 90, -180);
-
-        canvas.save();
-        canvas.rotate(timeRatio * 360, halfSideLength, halfSideLength);
-        canvas.drawPath(path, paint);
-        canvas.restore();
     }
 }

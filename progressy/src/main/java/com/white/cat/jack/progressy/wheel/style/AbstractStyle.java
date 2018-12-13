@@ -1,11 +1,9 @@
 package com.white.cat.jack.progressy.wheel.style;
 
 import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.RectF;
+import android.support.annotation.CallSuper;
 import android.support.annotation.ColorInt;
-import android.support.annotation.FloatRange;
+import android.view.View;
 
 /**
  * @author 泽乾
@@ -13,8 +11,22 @@ import android.support.annotation.FloatRange;
  */
 public abstract class AbstractStyle {
 
-    public abstract void draw(Canvas canvas, Path path, Paint paint, RectF rectF,
-                              float sideLength, @FloatRange(from = 0, to = 0.999999f) float degree);
+    private View mView;
+
+    @CallSuper
+    public void init(View view) {
+        this.mView = view;
+    }
 
     public abstract void setColor(@ColorInt int color);
+
+    public abstract void startAnimation();
+
+    public abstract void resetAnimation();
+
+    public abstract void draw(Canvas canvas, float sideLength);
+
+    protected void doneDraw() {
+        mView.invalidate();
+    }
 }

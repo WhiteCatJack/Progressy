@@ -10,13 +10,16 @@ import android.support.annotation.ColorInt;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
+import com.white.cat.jack.progressy.wheel.Utils;
+
 /**
  * Description.
  *
  * @author 泽乾
  * createAt 2018/12/11 7:49 PM
  */
-public final class RainDropStyle extends AbstractStyle {
+public final class MaterialStyle extends AbstractStyle {
+
 
     private int mColor = Color.BLACK;
 
@@ -28,6 +31,8 @@ public final class RainDropStyle extends AbstractStyle {
     private ValueAnimator mAnimator;
 
     private float mTimeRatio;
+
+    private static final float LINE_THICKNESS_RATIO = 0.25f;
 
     @Override
     public void init(View view) {
@@ -86,8 +91,7 @@ public final class RainDropStyle extends AbstractStyle {
 
         // prepare
         float halfSideLength = sideLength / 2;
-        float oneThirdSideLength = sideLength / 3;
-        float oneSixthSideLength = halfSideLength - oneThirdSideLength;
+        int lineThickness = Utils.roundingUp(sideLength * LINE_THICKNESS_RATIO);
 
         path.rewind();
 
@@ -96,17 +100,13 @@ public final class RainDropStyle extends AbstractStyle {
         paint.setStyle(Paint.Style.FILL);
 
         // make a shape
-        path.moveTo(halfSideLength, 0);
-        rectF.set(0, 0, sideLength, sideLength);
-        path.arcTo(rectF, 270, -180);
-        rectF.set(oneSixthSideLength, oneThirdSideLength, sideLength - oneSixthSideLength, sideLength);
-        path.arcTo(rectF, 90, 180);
-        rectF.set(oneThirdSideLength, 0, sideLength - oneThirdSideLength, oneThirdSideLength);
-        path.arcTo(rectF, 90, -180);
+        rectF.set(halfSideLength - 12, 0, halfSideLength + 12, lineThickness);
 
         canvas.save();
         canvas.rotate(timeRatio * 360, halfSideLength, halfSideLength);
-        canvas.drawPath(path, paint);
+        canvas.drawRect(rectF, paint);
+        canvas.rotate(timeRatio * 360, halfSideLength, halfSideLength);
+        canvas.drawRect(rectF, paint);
         canvas.restore();
     }
 }

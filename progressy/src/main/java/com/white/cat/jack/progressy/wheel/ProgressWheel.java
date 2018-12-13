@@ -1,18 +1,12 @@
 package com.white.cat.jack.progressy.wheel;
 
-import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.RectF;
 import android.support.annotation.ColorInt;
-import android.support.annotation.FloatRange;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.animation.LinearInterpolator;
 
 import com.white.cat.jack.progressy.R;
 import com.white.cat.jack.progressy.wheel.style.AbstractStyle;
@@ -25,16 +19,7 @@ import com.white.cat.jack.progressy.wheel.style.TieStyle;
  */
 public class ProgressWheel extends View {
 
-    protected Paint mPaint;
-    protected Path mPath;
-    protected RectF mRectF;
-
     private int mSideLength;
-
-    private static final int DURATION_IN_MILLIS = 2000;
-    private ValueAnimator mAnimator;
-    @FloatRange(from = 0, to = 0.999999f)
-    private float mTimeRatio;
 
     private AbstractStyle mStyle = new RainDropStyle();
 
@@ -54,48 +39,21 @@ public class ProgressWheel extends View {
     }
 
     private void init() {
-        initTools();
-        initAnimator();
+        mStyle.init(this);
         // for test
         setColor(ContextCompat.getColor(getContext(), R.color.nice_blue));
-    }
-
-    private void initTools() {
-        Paint paint = new Paint();
-        paint.setAntiAlias(true);
-        paint.setStyle(Paint.Style.FILL);
-        mPaint = paint;
-
-        mPath = new Path();
-        mRectF = new RectF();
-    }
-
-    private void initAnimator() {
-        ValueAnimator animator = ValueAnimator.ofFloat(0, 0.999999f);
-        animator.setDuration(DURATION_IN_MILLIS);
-        animator.setRepeatCount(ValueAnimator.INFINITE);
-        animator.setInterpolator(new LinearInterpolator());
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                mTimeRatio = (float) animation.getAnimatedValue();
-                invalidate();
-            }
-        });
-
-        mAnimator = animator;
     }
 
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        mAnimator.start();
+        mStyle.startAnimation();
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        mAnimator.cancel();
+        mStyle.resetAnimation();
     }
 
     /**
@@ -116,8 +74,7 @@ public class ProgressWheel extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
-        mStyle.draw(canvas, mPath, mPaint, mRectF, mSideLength, mTimeRatio);
+        mStyle.draw(canvas, mSideLength);
     }
 
     public void setStyle(@NonNull TieStyle style) {
